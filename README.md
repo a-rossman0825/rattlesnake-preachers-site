@@ -91,6 +91,7 @@ Use `semantic` memoization convention for commits, for example:
 1. create new branch (not main!) (feature/hero, fix/navbar, etc.)
 2. commit + push
 3. open PR
+4. Once PR is Merged to main, delete the branch to clean up repo
 
 ## Tech Stack
 - **Framework**: Nuxt 3
