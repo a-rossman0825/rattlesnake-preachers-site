@@ -7,6 +7,14 @@ export default defineNuxtConfig({
   },
   modules: ['@nuxtjs/tailwindcss'],
   css: ['~/assets/styles/main.scss'],
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+      ]
+    }
+  },
   app: {
     head: {
       link: [
