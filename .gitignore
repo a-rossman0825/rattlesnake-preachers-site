@@ -26,6 +26,7 @@ logs
 # editor
 .vscode/*
 !.vscode/launch.json
+!.vscode/settings.json
 
 #misc
 .tmp/
