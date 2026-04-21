@@ -93,15 +93,24 @@ Use `semantic` memoization convention for commits, for example:
 3. open PR
 4. Once PR is Merged to main, delete the branch to clean up repo
 
+- Multiple commits per feature, push together in one branch.
+- Separate features/fixes/chores - create separate branch and push separately.
+
+---
+
 ## Tech Stack
 - **Framework**: Nuxt 3
 - **UI Framework**: Vue 3
 - **Styling**: Tailwind CSS, SCSS, & GSAP
 - **Language**: TypeScript
 
+---
+
 
 ## Deployment
 - Github pages static deployment (set for SSG)
 - Personally registered domain, registered with Network Solutions (rattlesnakepreachers.com)
 
-Happy Coding `GRAHAM`
+---
+
+Happy Coding, `GRAHAM`
