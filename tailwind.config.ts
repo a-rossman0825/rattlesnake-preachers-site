@@ -3,10 +3,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
-        background: 'var(--color-background)',
-        text: 'var(--color-text)'
+        dark: 'var(--color-dark)',
+        light: 'var(--color-light)',
+      },
+      fontFamily: {
+        display: ['var(--font-display)'],
+        body: ['var(--font-body)']
       }
     }
   }

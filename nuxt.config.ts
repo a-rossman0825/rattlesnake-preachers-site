@@ -6,5 +6,15 @@ export default defineNuxtConfig({
     preset: 'static'
   },
   modules: ['@nuxtjs/tailwindcss'],
-  css: ['~/assets/styles/main.scss']
+  css: ['~/assets/styles/main.scss'],
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Anton&family=Anton+SC&display=swap'
+        }
+      ]
+    }
+  }
 })
