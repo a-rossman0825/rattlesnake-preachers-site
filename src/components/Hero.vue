@@ -8,11 +8,9 @@
 
     <div class="absolute inset-0 bg-black/40"></div>
     <div class="text-light relative z-10 flex justify-between px-10 pt-5 text-5xl">
-      <a
-        href="#"
-        class="font-display text-5xl font-extrabold uppercase tracking-[0.1em] no-underline"
-        >listen</a
-      >
+      <NuxtLink to="/listen" class="font-display text-5xl font-extrabold uppercase tracking-[0.1em] no-underline">
+        listen
+      </NuxtLink>
       <a
         href="#"
         class="font-display text-5xl font-extrabold uppercase tracking-[0.1em] no-underline"
