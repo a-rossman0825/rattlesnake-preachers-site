@@ -24,12 +24,19 @@ npm install
 ```
 
 3. **Start the development server**:
-  - If you have run & debug extension installed, the launch.json file will allow you to start the server from that extension. if not:
+  - If you have run & debug extension installed, the launch.json file will allow you to start the server from that extension (Nuxt Dev Server in dropdown). if not:
 ```bash
 npm run dev
 ```
 The site will be available at 
 `http://localhost:3000`
+
+BONUS: **Static SSG server**
+  - If you have the run & debug extension installed, launch.json & tasks.json will allow you to start the static SSG server from that extension (SSG: Generate & Serve in dropdown). If not:
+  ```bash
+  npm run generate
+  npx serve .output/label
+  ```
 
 ---
 
