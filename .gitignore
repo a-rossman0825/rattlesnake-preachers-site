@@ -27,6 +27,7 @@ logs
 .vscode/*
 !.vscode/launch.json
 !.vscode/settings.json
+!.vscode/tasks.json
 
 #misc
 .tmp/
