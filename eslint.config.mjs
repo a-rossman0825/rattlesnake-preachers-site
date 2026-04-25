@@ -4,6 +4,7 @@ import ts from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import vueParser from 'vue-eslint-parser'
 import prettier from 'eslint-config-prettier'
+import globals from 'globals'
 
 export default [
   {
@@ -28,20 +29,24 @@ export default [
       parserOptions: {
         parser: tsParser,
         extraFileExtensions: ['.vue']
-      }
+      },
+      globals: globals.browser
     },
     plugins: {
-      vue
+      vue,
+      '@typescript-eslint': ts
     },
     rules: {
-      ...vue.configs['flat/recommended'].rules
+      ...vue.configs['flat/recommended'].rules,
+      ...ts.configs.recommended.rules
     }
   },
 
   {
     files: ['**/*.ts'],
     languageOptions: {
-      parser: tsParser
+      parser: tsParser,
+      globals: globals.browser
     },
     plugins: {
       '@typescript-eslint': ts

@@ -11,8 +11,19 @@ import Shows from '~/components/Shows.vue';
 <template>
   <Hero />
   <Media />
-  <Music />
+  <div class="music-section-wrapper w-full">
+    <Music />
+  </div>
   <Merch />
   <Shows />
   <Footer />
 </template>
+
+
+<style lang="scss" scoped>
+
+.music-section-wrapper {
+  height: 95dvh;
+}
+
+</style>
