@@ -48,7 +48,7 @@ let currentGap = 0;
 let resizeTimeout: ReturnType<typeof setTimeout> | null = null; // NOTE - Timeout so resize doesn't fire fullBuild 100000000 times at once
 //!SECTION 
 
-  //SECTION - Accessibility handler
+  //SECTION - ACCESSIBILITY HANDLERS
 const prefersReducedMotion = ref(false);
 //!SECTION
 
@@ -285,7 +285,7 @@ function startTicker(gapPerPhrase: number) {
   if (ticker) {
     gsap.ticker.remove(ticker);
   };
-
+  // Skip animation if user prefers reduced motion
   if (prefersReducedMotion.value) return;
 
   //NOTE - refactored
