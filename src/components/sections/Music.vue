@@ -1,6 +1,7 @@
 
 <script lang="ts" setup>
-import MarqueeBox from './MarqueeBox.vue';
+import AlbumCarousel from '../ui/AlbumCarousel.vue';
+import MarqueeBox from '../ui/MarqueeBox.vue';
 
 </script>
 
@@ -9,7 +10,7 @@ import MarqueeBox from './MarqueeBox.vue';
     <MarqueeBox phrase="FEAST YOUR EARS" :speed="80">
       <!-- inner slotted content -->
       <div class="content">
-        <h2>MUSIC SECTION</h2>
+        <AlbumCarousel />
       </div>
     </MarqueeBox>
   </section>

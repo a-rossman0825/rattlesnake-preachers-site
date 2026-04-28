@@ -8,7 +8,7 @@
  */
 export function formatDate(
   dateStr: string,
-  format: 'year' | 'short' | 'long' | 'monthYear' = 'long'
+  format: 'year' | 'short' | 'long' | 'monthYear' | 'snakeCase' = 'long'
 ): string {
   const date = new Date(dateStr);
 
@@ -18,7 +18,7 @@ export function formatDate(
       return date.getFullYear().toString();
     
     case 'short': 
-      // "4/27/26" or "04/27.2026" (US Format)
+      // "4/27/26" or "04/27/2026" (US Format)
       return date.toLocaleDateString('en-US', {
         month: 'numeric',
         day: 'numeric',
@@ -31,6 +31,14 @@ export function formatDate(
         month: 'long',
         year: 'numeric'
       });
+
+    case 'snakeCase': {
+      // "2026_04_27"
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}_${month}_${day}`;
+    };  
 
     case 'long':
       default:

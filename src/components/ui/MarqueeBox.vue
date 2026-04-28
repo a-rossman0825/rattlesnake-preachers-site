@@ -1,55 +1,55 @@
 <script lang="ts" setup>
-import { ref, onMounted, nextTick, onBeforeUnmount } from 'vue';
-import type { ComponentPublicInstance } from 'vue';
-import { gsap } from 'gsap';
-import { useRouter } from '#vue-router';
+import { ref, onMounted, nextTick, onBeforeUnmount } from 'vue'
+import type { ComponentPublicInstance } from 'vue'
+import { gsap } from 'gsap'
+import { useRouter } from '#vue-router'
 
 // const DEBUG = false; //for debugging: uncomment "console.logs()" and switch DEBUG to true.
 
 const props = defineProps<{
-  phrase?: string,
+  phrase?: string
   speed?: number
-}>();
+}>()
 
 // SECTION - CONFIG
-const router = useRouter();
-const phrase = props.phrase || 'FEAST YOUR EARS';
-const phraseLength = phrase.length;
-const LETTER_SPACING = 4;
-const MIN_PHRASE_GAP = 12;
-const MAX_PHRASE_GAP = 28;
-const TARGET_PHRASE_GAP = 300;
-const padding = 15;
-let speed = props.speed || 80; //NOTE - Adjust speed for animation speed (duh lol)
+const router = useRouter()
+const phrase = props.phrase || 'FEAST YOUR EARS'
+const phraseLength = phrase.length
+const LETTER_SPACING = 4
+const MIN_PHRASE_GAP = 12
+const MAX_PHRASE_GAP = 28
+const TARGET_PHRASE_GAP = 300
+const padding = 15
+let speed = props.speed || 80 //NOTE - Adjust speed for animation speed (duh lol)
 //!SECTION
 
 // SECTION - REACTIVE STATE
-const chars = ref<string[]>(phrase.split(''));
-const stage = ref<HTMLElement | null>(null);
-const charRefs = ref<HTMLElement[]>([]);
+const chars = ref<string[]>(phrase.split(''))
+const stage = ref<HTMLElement | null>(null)
+const charRefs = ref<HTMLElement[]>([])
 //!SECTION
 
-// SECTION - LAYOUT STATE 
-let width = 0;
-let height = 0;
-let innerWidth = 0;
-let innerHeight = 0;
-let perimeter = 0;
+// SECTION - LAYOUT STATE
+let width = 0
+let height = 0
+let innerWidth = 0
+let innerHeight = 0
+let perimeter = 0
 //!SECTION
 
 // SECTION - ANIMATION STATE
-let position = 0;
-let lastTotalLength = 1;
-let ticker: (() => void) | null = null;
+let position = 0
+let lastTotalLength = 1
+let ticker: (() => void) | null = null
 //!SECTION
 
 //SECTION - INTERNALS
-let currentGap = 0;
-let resizeTimeout: ReturnType<typeof setTimeout> | null = null; // NOTE - Timeout so resize doesn't fire fullBuild 100000000 times at once
-//!SECTION 
+let currentGap = 0
+let resizeTimeout: ReturnType<typeof setTimeout> | null = null // NOTE - Timeout so resize doesn't fire fullBuild 100000000 times at once
+//!SECTION
 
-  //SECTION - ACCESSIBILITY HANDLERS
-const prefersReducedMotion = ref(false);
+//SECTION - ACCESSIBILITY HANDLERS
+const prefersReducedMotion = ref(false)
 //!SECTION
 
 /**
@@ -58,36 +58,35 @@ const prefersReducedMotion = ref(false);
 function setCharRef(index: number) {
   return (el: Element | ComponentPublicInstance | null) => {
     if (el instanceof HTMLElement) {
-      charRefs.value[index] = el;
-    };
-  };
-};
+      charRefs.value[index] = el
+    }
+  }
+}
 
 // map char positions onto rect
 function perimeterToXY(p: number) {
-  let pos = ((p % perimeter) + perimeter) % perimeter;
+  let pos = ((p % perimeter) + perimeter) % perimeter
 
   if (pos < innerWidth) {
-    return { x: padding + pos, y: padding, angle: 0 };
-  };
+    return { x: padding + pos, y: padding, angle: 0 }
+  }
 
-  pos -= innerWidth;
+  pos -= innerWidth
 
   if (pos < innerHeight) {
-    return { x: width - padding, y: padding + pos, angle: 90 };
-  };
+    return { x: width - padding, y: padding + pos, angle: 90 }
+  }
 
-  pos -= innerHeight;
+  pos -= innerHeight
 
   if (pos < innerWidth) {
-    return { x: width - padding - pos, y: height - padding, angle: 180 };
-  };
+    return { x: width - padding - pos, y: height - padding, angle: 180 }
+  }
 
-  pos -= innerWidth;
+  pos -= innerWidth
 
-  return { x: padding, y: height - padding - pos, angle: 270 };
-
-};
+  return { x: padding, y: height - padding - pos, angle: 270 }
+}
 
 /**
  * measures/calculates stage (rect)
@@ -95,19 +94,19 @@ function perimeterToXY(p: number) {
  * @returns bool if width > 0 && height > 0
  */
 function measureStage() {
-  if (!stage.value) return false;
+  if (!stage.value) return false
 
   // Measure rectangle dimensions
-  const rect = stage.value.getBoundingClientRect();
+  const rect = stage.value.getBoundingClientRect()
 
-  width = rect.width;
-  height = rect.height;
-  innerWidth = width - padding * 2;
-  innerHeight = height - padding * 2;
-  perimeter = innerWidth * 2 + innerHeight * 2;
+  width = rect.width
+  height = rect.height
+  innerWidth = width - padding * 2
+  innerHeight = height - padding * 2
+  perimeter = innerWidth * 2 + innerHeight * 2
 
-  return width > 0 && height > 0;
-};
+  return width > 0 && height > 0
+}
 
 /**
  * measures width of phrase and returns
@@ -115,18 +114,18 @@ function measureStage() {
  */
 function measurePhraseWidth(): number {
   const rawWidth = charRefs.value.reduce((sum, el) => {
-    return sum + el.offsetWidth;
-  }, 0);
-  return rawWidth + LETTER_SPACING * (phraseLength - 1);
-};
+    return sum + el.offsetWidth
+  }, 0)
+  return rawWidth + LETTER_SPACING * (phraseLength - 1)
+}
 
 /**
  * calculates how many phraseCopies & Gap size on Rect
  * @returns //{ copies, gap }
  */
 function computeCopiesAndGap(phraseWidth: number) {
-  let copies = Math.max(1, Math.floor(perimeter / (phraseWidth + TARGET_PHRASE_GAP)));
-  let gap = (perimeter - copies * phraseWidth) / copies;
+  let copies = Math.max(1, Math.floor(perimeter / (phraseWidth + TARGET_PHRASE_GAP)))
+  let gap = (perimeter - copies * phraseWidth) / copies
 
   //   // Clamp to stop gap from every getting too large
   // if (gap < MIN_PHRASE_GAP) {
@@ -136,49 +135,48 @@ function computeCopiesAndGap(phraseWidth: number) {
 
   // gap = Math.min(gap, MAX_PHRASE_GAP);
 
-  gap = Math.max(MIN_PHRASE_GAP, Math.min(gap, MAX_PHRASE_GAP));
+  gap = Math.max(MIN_PHRASE_GAP, Math.min(gap, MAX_PHRASE_GAP))
 
-  return { copies, gap };
-};
+  return { copies, gap }
+}
 
 /**
  * builds the stream of phrases
- * @param copies 
+ * @param copies
  * @returns string[] - array of chars
  */
 function buildStream(copies: number): string[] {
-  const stream: string[] = [];
+  const stream: string[] = []
 
   for (let copy = 0; copy < copies; copy++) {
     for (let i = 0; i < phraseLength; i++) {
-      stream.push(phrase[i]!);
-    };
-  };
-  return stream;
-};
+      stream.push(phrase[i]!)
+    }
+  }
+  return stream
+}
 
 /**
  * Measures Rect & phrase, sets chars on layout, builds the stream, then triggers re-render
  * @returns void (sets State)
  */
 function rebuild() {
-
-  const valid = measureStage();
+  const valid = measureStage()
   if (!valid) {
-    console.warn('Invalid dimensions, aborting layout');
-    return;
-  };
+    console.warn('Invalid dimensions, aborting layout')
+    return
+  }
 
-  const phraseWidth = measurePhraseWidth();
-  if (phraseWidth <= 0) return;
+  const phraseWidth = measurePhraseWidth()
+  if (phraseWidth <= 0) return
 
-  const { copies, gap } = computeCopiesAndGap(phraseWidth);
-  currentGap = gap;
+  const { copies, gap } = computeCopiesAndGap(phraseWidth)
+  currentGap = gap
 
-  const stream = buildStream(copies);
+  const stream = buildStream(copies)
 
-  charRefs.value = [];
-  chars.value = stream;
+  charRefs.value = []
+  chars.value = stream
 
   //NOTE - refactored - saved for safety because my code never works
   // // Define rectangle path
@@ -243,50 +241,48 @@ function rebuild() {
 
   // //if (DEBUG) console.log('charRefs length:', charRefs.value.length);
   // //if (DEBUG) console.log('stream length:', stream.length);
-
-};
+}
 
 /**
  * measures full length of phraseStream and adds Gap
- * @param gapPerPhrase 
+ * @param gapPerPhrase
  * @returns totalLength
  */
 function computeTotalLength(gapPerPhrase: number): number {
-  let cursor = 0;
+  let cursor = 0
   // FIRST PASS: measure total length
   charRefs.value.forEach((el, i) => {
-    cursor += el.offsetWidth + LETTER_SPACING;
-    
+    cursor += el.offsetWidth + LETTER_SPACING
+
     // Add gap to full phrase
     if ((i + 1) % phraseLength === 0) {
-      cursor += gapPerPhrase;
+      cursor += gapPerPhrase
     }
-  });
-  return cursor || 1;
-};
+  })
+  return cursor || 1
+}
 
 /**
  * calculates position of each char
- * @param base 
- * @param offset 
- * @param total 
+ * @param base
+ * @param offset
+ * @param total
  * @returns number (position)
  */
 function computeWrappedPosition(base: number, offset: number, total: number): number {
-  let p = base + offset;
-  if (p >= total) p -= total;
-  return p;
+  let p = base + offset
+  if (p >= total) p -= total
+  return p
 }
-
 
 // Sets char layout and animates ticker
 function startTicker(gapPerPhrase: number) {
   // stop old ticker if it exists
   if (ticker) {
-    gsap.ticker.remove(ticker);
-  };
+    gsap.ticker.remove(ticker)
+  }
   // Skip animation if user prefers reduced motion
-  if (prefersReducedMotion.value) return;
+  if (prefersReducedMotion.value) return
 
   //NOTE - refactored
   // //recompute totalLength
@@ -294,37 +290,36 @@ function startTicker(gapPerPhrase: number) {
   // // FIRST PASS: measure total length
   // charRefs.value.forEach((el, i) => {
   //   cursor += el.offsetWidth + LETTER_SPACING;
-    
+
   //   // Add gap to full phrase
   //   if ((i + 1) % phraseLength === 0) {
   //     cursor += gapPerPhrase;
   //   }
   // });
 
-  const totalLength = computeTotalLength(gapPerPhrase);
-  lastTotalLength = totalLength;
+  const totalLength = computeTotalLength(gapPerPhrase)
+  lastTotalLength = totalLength
   //if (DEBUG) console.log('totalLength:', totalLength);
   // SECOND PASS: set chars layout & animate ticker
   ticker = () => {
-
-    const dt = gsap.ticker.deltaRatio() / 60;
-    position += speed * dt;
+    const dt = gsap.ticker.deltaRatio() / 60
+    position += speed * dt
 
     // loop position on stream end & wrap global position
     if (position >= totalLength) {
-      position -= totalLength;
-    };
+      position -= totalLength
+    }
 
-    let cursor = 0;
+    let cursor = 0
 
     charRefs.value.forEach((el, i) => {
-      const charWidth = el.offsetWidth;
-      const charHeight = el.offsetHeight;
+      const charWidth = el.offsetWidth
+      const charHeight = el.offsetHeight
 
       // NOTE - refactored
       // let p = position + cursor;
 
-      const p = computeWrappedPosition(position, cursor, totalLength);
+      const p = computeWrappedPosition(position, cursor, totalLength)
 
       // NOTE - refactored
       //wrap each char individually
@@ -332,60 +327,59 @@ function startTicker(gapPerPhrase: number) {
       //   p -= totalLength;
       // };
 
-      const perimeterPos = (p / totalLength) * perimeter;
-      const { x, y, angle } = perimeterToXY(perimeterPos);
+      const perimeterPos = (p / totalLength) * perimeter
+      const { x, y, angle } = perimeterToXY(perimeterPos)
 
       gsap.set(el, {
         x: x - charWidth / 2,
         y: y - charHeight / 2,
-        rotation: angle,
-      });
+        rotation: angle
+      })
       // advnance cursor
-      cursor += charWidth + LETTER_SPACING;
+      cursor += charWidth + LETTER_SPACING
       // Add a gap after each phrase
       if ((i + 1) % phraseLength === 0) {
-        cursor += gapPerPhrase;
-      };
-    });
-  };
+        cursor += gapPerPhrase
+      }
+    })
+  }
 
-  gsap.ticker.add(ticker);
+  gsap.ticker.add(ticker)
 }
 
 // Combine rebuild + animation on refresh/viewport resize
 async function fullRebuild() {
-
-  if (!stage.value) return;
+  if (!stage.value) return
 
   // Capture animation progress before rebuild
-  const progress = lastTotalLength ? position / lastTotalLength : 0;
+  const progress = lastTotalLength ? position / lastTotalLength : 0
 
   // Force clean base phrase
-  charRefs.value = [];
-  chars.value = phrase.split('');
+  charRefs.value = []
+  chars.value = phrase.split('')
 
-  await nextTick(); // wait for DOM to rehydrate
+  await nextTick() // wait for DOM to rehydrate
 
   //rebuild with clean refs
-  rebuild();
+  rebuild()
 
-  await nextTick(); // wait for stream to render
+  await nextTick() // wait for stream to render
 
-  startTicker(currentGap);
+  startTicker(currentGap)
 
-  position = progress * lastTotalLength;
-};
+  position = progress * lastTotalLength
+}
 
 // Sets timeout on resize so fullRebuild() doesn't fire every time the viewport changes by 1px
 function handleResize() {
   if (resizeTimeout) {
-    clearTimeout(resizeTimeout);
-  };
+    clearTimeout(resizeTimeout)
+  }
 
   resizeTimeout = setTimeout(() => {
-    fullRebuild();
-  }, 2);
-};
+    fullRebuild()
+  }, 2)
+}
 
 /**
  * checks if mouseclick is near stage border for page reroute
@@ -393,33 +387,28 @@ function handleResize() {
  */
 function isNearborder(x: number, y: number, threshold = 20) {
   //distance from each edge
-  const top = Math.abs(y - padding);
-  const bottom = Math.abs(y - (height - padding));
-  const left = Math.abs(x - padding);
-  const right = Math.abs(x - (width - padding));
+  const top = Math.abs(y - padding)
+  const bottom = Math.abs(y - (height - padding))
+  const left = Math.abs(x - padding)
+  const right = Math.abs(x - (width - padding))
 
-  return (
-    top < threshold ||
-    bottom < threshold ||
-    left < threshold ||
-    right < threshold
-  );
-};
+  return top < threshold || bottom < threshold || left < threshold || right < threshold
+}
 
 /**
- * handles stage click for page reroute 
+ * handles stage click for page reroute
  * @param e - mouse event
  */
 function handleStageClick(e: MouseEvent) {
-  if (!stage.value) return;
+  if (!stage.value) return
 
-  const rect = stage.value.getBoundingClientRect();
+  const rect = stage.value.getBoundingClientRect()
 
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
+  const x = e.clientX - rect.left
+  const y = e.clientY - rect.top
 
   if (isNearborder(x, y)) {
-    router.push('/listen'); //STUB: update this
+    router.push('/listen') //STUB: update this
   }
 }
 
@@ -428,59 +417,47 @@ function handleStageClick(e: MouseEvent) {
  * @param e: mouseEvent
  */
 function handleMouseMove(e: MouseEvent) {
-  if (!stage.value) return;
-  const rect = stage.value.getBoundingClientRect();
+  if (!stage.value) return
+  const rect = stage.value.getBoundingClientRect()
 
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  const isNear = isNearborder(x, y);
+  const x = e.clientX - rect.left
+  const y = e.clientY - rect.top
+  const isNear = isNearborder(x, y)
 
-  stage.value.style.cursor = isNear ? 'pointer' : 'default';
+  stage.value.style.cursor = isNear ? 'pointer' : 'default'
 }
 
 onMounted(async () => {
-  
   //Accessibility guard for reduced motion
-  const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-  prefersReducedMotion.value = media.matches;
+  const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+  prefersReducedMotion.value = media.matches
 
   media.addEventListener('change', (e) => {
-    prefersReducedMotion.value = e.matches;
-  });
-  
-  await nextTick();
-  await fullRebuild();
+    prefersReducedMotion.value = e.matches
+  })
 
-  window.addEventListener('mousemove', handleMouseMove);
-  window.addEventListener('resize', handleResize);
-});
+  await nextTick()
+  await fullRebuild()
+
+  window.addEventListener('mousemove', handleMouseMove)
+  window.addEventListener('resize', handleResize)
+})
 
 // Cleanup for DOM refresh/resize
 onBeforeUnmount(() => {
   if (ticker) {
-    gsap.ticker.remove(ticker);
-  };
+    gsap.ticker.remove(ticker)
+  }
 
-  window.removeEventListener('mousemove', handleMouseMove);
-  window.removeEventListener('resize', handleResize);
-});
-
+  window.removeEventListener('mousemove', handleMouseMove)
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
 <template>
-  <div 
-    ref="stage" 
-    class="stage" 
-    aria-hidden="true"
-    @click="handleStageClick"
-    >
+  <div ref="stage" class="stage" aria-hidden="true" @click="handleStageClick">
     <div>
-      <div 
-        v-for="(char, i) in chars"
-        :key="i"
-        class="char"
-        :ref="setCharRef(i)"
-      >
+      <div v-for="(char, i) in chars" :key="i" class="char" :ref="setCharRef(i)">
         {{ char }}
       </div>
     </div>
@@ -492,7 +469,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
-
 .stage {
   position: relative;
   width: 100%;
@@ -515,5 +491,4 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: center;
 }
-
 </style>
