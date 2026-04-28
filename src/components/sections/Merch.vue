@@ -21,7 +21,7 @@ const handleStoreClick = () => {
 </script>
 
 <template>
-  <section class="merch relative h-screen w-full flex flex-col items-center justify-center">
+  <section class="merch relative h-screen w-full flex flex-col items-center justify-center bg-light">
     <!-- Kaleidoscope background -->
     <div class="kaleidoscope absolute inset-0 flex items-center justify-center z-0">
       <img src="/assets/media/ouroboros.png" alt="Ouroboros Kaleidoscope" class="h-[95vh] w-[95vw] object-cover">
@@ -44,7 +44,7 @@ const handleStoreClick = () => {
       <a 
         href="#"
         @click.prevent="handleStoreClick"
-        class="store-link text-2xl font-bold uppercase"
+        class="store-link text-2xl font-bold uppercase text-dark"
       >
         FEAST YOUR BODY
       </a>

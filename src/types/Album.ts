@@ -1,3 +1,5 @@
+import type { Meta } from "./Meta"
+
 export interface Album {
   id: string //slug based string ids (i.e. title: "Feels Too Good" -> slug id: 'feels-too-good')
   title: string
@@ -9,4 +11,6 @@ export interface Album {
   artist?: string // "for "feat:" or collaboration with other artists (i.e. "feat: John Kunk")
   type?: 'LP' | 'EP' | 'Single' | 'Compilation'
   featured?: boolean
+
+  meta?: Meta
 }
