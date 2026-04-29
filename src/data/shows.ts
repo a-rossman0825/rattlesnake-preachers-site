@@ -1,9 +1,9 @@
 import type { Show } from '../types/Show'
 
 export const shows: Show[] = [
-    {
+  {
     id: 'jims-alibi-01192026',
-    name: "Jim's Alibi - Live Show",
+    name: "Jim's Alibi",
     date: '2026-01-19', 
     doorsOpen: '19:00', 
     startTime: '20:00', 
@@ -71,6 +71,72 @@ export const shows: Show[] = [
           {
             "@type": "MusicGroup",
             name: "The Howlers",
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: 'rm-block-party-06272026',
+    name: "Roosevelt Market Block Party",
+    date: '2026-06-27', 
+    doorsOpen: '13:00', 
+    startTime: '15:30', 
+    venueName: "Roosevelt Market",
+    location: 'Boise, ID, U.S.A', 
+    description: 'Join us for an unforgettable night of live music at The Roosevelt Market in Boise, featuring Rattlesnake Preachers and Red Light Challenge.',
+    supportActs: [
+      {
+        name: 'Red Light Challenge',
+        instagramUrl: 'https://www.instagram.com/redlightchallenge/',
+        facebookUrl: 'https://www.facebook.com/redlightchallenge/',
+        spotifyUrl: 'https://open.spotify.com/artist/0V5IyWrIeDOXFg2b7W4zm3',
+      },
+    ],
+    posterImg: '/assets/media/shows/rm-block-party.png',
+    price: '00.00',
+    ticketUrl: 'https://rmblockparty.com/',
+    ticketStatus: 'onsale', 
+    is21Plus: false,
+    meta: {
+      title: "Jim's Alibi - Live Show",
+      description: 'Live music at Jim\'s Alibi featuring Rattlesnake Preachers and special guests.',
+      canonicalUrl: '/shows/rm-block-party-06272026',
+      openGraphImage: '/assets/media/shows/rm-block-party.png',
+      twitterCard: 'summary_large_image',
+      structuredData: {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        name: "Roosevelt Market Block Party", 
+        startDate: "2026-06-27T13:00:00",
+        location: {
+          "@type": "Place",
+          name: "Roosevelt Market",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "311 N. Elm Ave",
+            addressLocality: "Boise",
+            addressRegion: "ID",
+            PostalCode: "83712",
+            addressCountry: "US",
+          },
+        },
+        offers: {
+          "@type": "offer",
+          url: "https://rmblockparty.com/",
+          price: "00.00",
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+          validFrom: "2026-04-029T12:00:00", 
+        },
+        performer: [
+          {
+            "@type": "MusicGroup",
+            name: "Rattlesnake Preachers",
+          },
+          {
+            "@type": "MusicGroup",
+            name: "Red Light Challenge",
           },
         ],
       },

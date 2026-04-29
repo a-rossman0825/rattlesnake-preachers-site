@@ -31,7 +31,7 @@ const title = 'FEAST YOUR SOUL'
 
         <div v-for="(show, idx) in showArray" :key="idx" class="shows__row">
           <div class="col col--date">{{ formatDate(show.date, 'snakeCase') }}</div>
-          <div class="col col--venue">{{ show.venueName }}</div>
+          <div class="col col--venue">{{ show.name }}</div>
           <div class="col col--location">{{ show.location }}</div>
         </div>
       </div>

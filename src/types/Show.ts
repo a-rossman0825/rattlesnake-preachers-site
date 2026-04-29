@@ -1,6 +1,5 @@
-import type { Meta } from "./Meta"
-import type { StructuredData } from "./StructuredData"
-
+import type { Meta } from "./Meta";
+import type { StructuredData } from "./StructuredData";
 
 export interface Show {
   id: string //slug based id (show-venue-show-date) (ie: jim\'s-alibi-01192026)
