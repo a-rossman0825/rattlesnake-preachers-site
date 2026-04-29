@@ -1,4 +1,5 @@
 import type { Meta } from "./Meta"
+import type { StructuredData } from "./StructuredData"
 
 
 export interface Show {
@@ -16,7 +17,7 @@ export interface Show {
   ticketUrl?: string
   ticketStatus?: 'onsale' | 'soldout' | 'presale' | 'cancelled' | 'postponed' | undefined
   is21Plus?: boolean
-  meta?: Meta
+  meta?: Meta<ShowStructuredData>
 }
 
 
@@ -24,7 +25,42 @@ export interface Show {
 
 interface supportAct {
   name: string
-  url1?: string
-  url2?: string
-  url3?: string
+  instagramUrl?: string
+  facebookUrl?: string
+  spotifyUrl?: string
+  bandcampUrl?: string
+  appleMusicUrl?: string
+  soundcloudUrl?: string
+  twitterUrl?: string
+  labelUrl?: string
+}
+
+export interface ShowStructuredData extends StructuredData {
+  "@type": "Event"
+  startDate: string
+  endDate?: string
+  location: {
+    "@type": "Place"
+    name: string // Venue Name
+    address: {
+      "@type": "PostalAddress"
+      streetAddress?: string
+      addressLocality: string
+      addressRegion: string
+      PostalCode: string
+      addressCountry: string
+    };
+  };
+  offers?: {
+    "@type": "offer"
+    url: string // Ticket URL
+    price: string // Ticket Price
+    priceCurrency: string // Currency code (e.g., "USD")
+    availability: string // e.g., "InStock"
+    validFrom?: string // When ticket sales start
+  };
+  performer?: {
+    "@type": "MusicGroup"
+    name: string
+  }[];
 }

@@ -9,7 +9,7 @@ import MarqueeBox from '../ui/MarqueeBox.vue';
   <section class="marquee-wrapper">
     <MarqueeBox phrase="FEAST YOUR EARS" :speed="80">
       <!-- inner slotted content -->
-      <div class="content">
+      <div class="content pt-20">
         <AlbumCarousel />
       </div>
     </MarqueeBox>
