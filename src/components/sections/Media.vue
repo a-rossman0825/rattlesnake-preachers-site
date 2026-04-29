@@ -87,7 +87,7 @@ const handleMouseMove = (event: MouseEvent) => {
       class="animate-fadeIn absolute left-10 top-1/2 z-10 -translate-y-1/2 transform text-5xl text-white opacity-0"
     >
       <a
-        href="/gallery"
+        href="/media"
         aria-label="Go to the gallery page for more visual content"
         class="ms-40 text-white no-underline focus:outline-yellow-500"
       >
