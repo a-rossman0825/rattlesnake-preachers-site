@@ -99,8 +99,8 @@ export const shows: Show[] = [
     ticketStatus: 'onsale', 
     is21Plus: false,
     meta: {
-      title: "Jim's Alibi - Live Show",
-      description: 'Live music at Jim\'s Alibi featuring Rattlesnake Preachers and special guests.',
+      title: "Roosevelt Market Block Party",
+      description: 'Live music at Roosevelt Market featuring Rattlesnake Preachers and Red Light Challenge.',
       canonicalUrl: '/shows/rm-block-party-06272026',
       openGraphImage: '/assets/media/shows/rm-block-party.png',
       twitterCard: 'summary_large_image',

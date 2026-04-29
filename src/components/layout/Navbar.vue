@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import { useRoute } from '#vue-router'
 
-const route = useRoute()
+const route = useRoute();
+
+const isOuterRoute = (path: string) => {
+  const outsideRoutes = ['/', '/shows', '/socials', '/contact', '/subscribe', '/merch'];
+  return outsideRoutes.includes(path);
+};
 </script>
 
 <template>
@@ -12,7 +17,7 @@ const route = useRoute()
     <NuxtLink v-else to="/" class="w-24">close</NuxtLink>
     <NuxtLink v-if="route.path !== '/socials'" to="/socials" class="w-24">socials</NuxtLink>
     <NuxtLink v-else to="/" class="w-24">close</NuxtLink>
-    <NuxtLink v-if="route.path === '/listen'" to="/" class="w-24">close</NuxtLink>
+    <NuxtLink v-if="!isOuterRoute(route.path)" to="/" class="w-24">close</NuxtLink>
     <NuxtLink v-if="route.path !== '/contact'" to="/contact" class="w-24"> contact </NuxtLink>
     <NuxtLink v-else to="/" class="w-24">close</NuxtLink>
     <NuxtLink v-if="route.path !== '/subscribe'" to="/subscribe" class="w-24 text-end">

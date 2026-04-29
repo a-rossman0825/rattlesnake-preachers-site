@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { formatDate } from '~/utils/formatDate'
+import { filterShows } from '../../utils/filterShows';
 import { shows } from '~/data/shows';
+import type { Show } from '~/types/Show';
 
 
-const showArray = computed(() => shows);
+const showArray = computed((): Show[] => filterShows(shows)); // Filters out past shows from Shows[]
 
 
 const title = 'FEAST YOUR SOUL'
@@ -17,7 +19,7 @@ const title = 'FEAST YOUR SOUL'
       <!-- Left: vertical stacked title -->
       <div class="shows__title" aria-hidden>
         <div v-for="(char, i) in title.split('')" :key="i" class="shows__title-char cursor-pointer">
-          {{ char }}
+          <a href="/shows">{{ char }}</a>
         </div>
       </div>
 
