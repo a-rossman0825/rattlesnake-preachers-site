@@ -1,13 +1,10 @@
 <script lang="ts" setup>
+import { computed } from 'vue';
+import { merchItems } from '~/data/MerchItems';
 
 const storeUrl = 'https://placeholder-store-url.com' // TODO - replace when store url is ready
 
-const merchItems = [
-  { name: 'calendar', image: '/assets/media/merch/calendar.png' },
-  { name: 'hoodie', image: '/assets/media/merch/hoodie.png' },
-  { name: 'mug', image: '/assets/media/merch/mug.png' },
-  { name: 'undies', image: '/assets/media/merch/undies.png' },
-];
+const merch = computed(() => merchItems);
 
 const handleMerchClick = (itemName: string) => {
   // TODO - Route to correct shopify product links
@@ -29,7 +26,7 @@ const handleStoreClick = () => {
     <div class="merch__content relative z-10 flex flex-col items-center gap-8">
       <div class="merch__grid grid grid-cols-4 gap-4">
         <button
-          v-for="item in merchItems"
+          v-for="item in merch"
           :key="item.name"
           @click="handleMerchClick(item.name)"
           class="merch-item cursor-pointer h-[400px]"

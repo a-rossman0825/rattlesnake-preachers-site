@@ -1,17 +1,14 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { formatDate } from '~/utils/formatDate'
+import { shows } from '~/data/shows';
 
-// Simple static shows data (date in YYYY-MM-DD)
-const shows = ref([
-  { date: '2024-12-12', venue: "Buddy's Bar", location: 'Somecity, ST' },
-  { date: '2024-11-11', venue: "Craig's Cavern", location: 'Othercity, ST' },
-  { date: '2024-10-05', venue: 'The Dome', location: 'Metropolis, ST' }
-]);
 
+const showArray = computed(() => shows);
 
 
 const title = 'FEAST YOUR SOUL'
+
 </script>
 
 <template>
@@ -32,9 +29,9 @@ const title = 'FEAST YOUR SOUL'
           <div class="col col--location">LOCATION</div>
         </div>
 
-        <div v-for="(show, idx) in shows" :key="idx" class="shows__row">
+        <div v-for="(show, idx) in showArray" :key="idx" class="shows__row">
           <div class="col col--date">{{ formatDate(show.date, 'snakeCase') }}</div>
-          <div class="col col--venue">{{ show.venue }}</div>
+          <div class="col col--venue">{{ show.venueName }}</div>
           <div class="col col--location">{{ show.location }}</div>
         </div>
       </div>
