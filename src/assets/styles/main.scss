@@ -29,3 +29,7 @@ h3, h4, h5, h6 {
   filter: blur(10px);
   pointer-events: none;
 }
+
+.page-section {
+  margin-block: 20vh; //Increase/decrease for section spacing
+}
