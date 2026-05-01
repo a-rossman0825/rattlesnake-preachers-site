@@ -1,7 +1,18 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { onMounted } from 'vue';
+import { gsap } from 'gsap';
+
+onMounted(() => {
+  gsap.fromTo(
+    '.hero-section',
+    { opacity: 0 },
+    { opacity: 1, duration: 1, ease: 'power2.out' }
+  )
+});
+</script>
 
 <template>
-  <section class="relative h-screen w-full overflow-hidden pt-7">
+  <section class="hero-section relative h-screen w-full overflow-hidden pt-7">
     <video autoplay muted loop playsinline class="absolute inset-0 h-full w-full object-cover">
       <source src="/assets/media/mash24-vid.mp4" type="video/mp4" />
     </video>
@@ -30,5 +41,9 @@
 .outline-text {
   color: transparent;
   -webkit-text-stroke: 2px var(--color-light);
+}
+
+.hero-section {
+  opacity: 0;
 }
 </style>

@@ -6,18 +6,18 @@ import MarqueeBox from '../ui/MarqueeBox.vue';
 </script>
 
 <template>
-  <section class="marquee-wrapper">
+  <section class="music-section marquee-wrapper">
     <MarqueeBox phrase="FEAST YOUR EARS" :speed="80">
       <!-- inner slotted content -->
       <div class="content pt-20">
         <AlbumCarousel />
       </div>
-    </MarqueeBox>
+    </MarqueeBox />
   </section>
 </template>
 
 <style lang="scss" scoped>
-.marquee-wrapper {
+.music-section {
   width: 100%;
   height: 100%;
   position: relative;

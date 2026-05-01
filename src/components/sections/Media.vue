@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { imagesArray } from '~/data/imagesArray'
+import { usePageScroll } from '~/composables/usePageScroll'
 
 // Array of image paths
 const images: string[] = imagesArray
@@ -17,6 +18,16 @@ const stampedImages: HTMLImageElement[] = []
 
 // Track the last mouse position to control stamping frequency
 let lastMousePos = { x: 0, y: 0 }
+
+// Get scroll state
+const { isScrolling } = usePageScroll();
+
+// control stamping based on scroll state
+let canStamp = ref(true);
+
+watch(isScrolling, (scrolling) => {
+  canStamp.value = !scrolling
+});
 
 const handleMouseMove = (event: MouseEvent) => {
   if (!stampsContainer.value) return
@@ -79,7 +90,7 @@ const handleMouseMove = (event: MouseEvent) => {
 
 <template>
   <section
-    class="relative h-screen w-screen overflow-hidden bg-black"
+    class="media-section relative h-screen w-screen overflow-hidden bg-black"
     @mousemove="handleMouseMove"
     aria-label="Interactive section for visual exploration. Images appear as you move your mouse."
   >

@@ -14,7 +14,7 @@ const title = 'FEAST YOUR SOUL'
 </script>
 
 <template>
-  <section class="shows h-screen w-full bg-dark text-light">
+  <section class="shows-section shows h-screen w-full bg-dark text-light">
     <div class="shows__inner">
       <!-- Left: vertical stacked title -->
       <div class="shows__title" aria-hidden>
