@@ -13,12 +13,12 @@ usePageScroll()
 
 <template>
   <div class="page-wrapper">
-    <Hero class="hero-section page-section" />
-    <Media class="media-section page-section" />
-    <div class="music-section-wrapper w-full">
-      <Music class="music-section page-section" />
+    <Hero class="hero-section mb-[40vh]" />
+    <Media class="media-section mt-[20vh]" />
+    <div class="music-section music-section-wrapper mt-[20vh] w-full">
+      <Music />
     </div>
-    <Merch class="merch-section page-section" />
+    <Merch class="merch-section mt-[20vh]" />
     <Shows class="shows-section page-section" />
     <Footer />
   </div>

@@ -1,221 +1,147 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import Lenis from 'lenis'
+import { onMounted, onBeforeUnmount } from 'vue'
+import { canStamp } from './useMediaState'
 
-//registers scrollTrigger
+// Register ScrollTrigger plugin (client-only)
 if (import.meta.client) {
   gsap.registerPlugin(ScrollTrigger)
-};
+}
+
+let lenis: Lenis | undefined
 
 export const usePageScroll = () => {
-  const isScrolling = ref(false);
-  const currentSection = ref('hero');
-  const scrollProgress = ref(0);
+  onMounted(() => {
+    if (!import.meta.client) return
 
-  let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+    // SECTION - LENIS SMOOTH SCROLL
+    lenis = new Lenis({
+      duration: 3, // higher = heavier/slower feeling scroll
+      smoothWheel: true
+    })
 
-  const initScrollAnimations = () => {
-    if (!import.meta.client) return;
+    // Keep ScrollTrigger in sync with Lenis scroll position
+    lenis.on('scroll', ScrollTrigger.update)
 
-    //smooth scroll config
-    gsap.config({
-      force3D: true,
-    });
+    // Hook Lenis into GSAP's ticker
+    gsap.ticker.add((time) => {
+      lenis?.raf(time * 1000)
+    })
+    gsap.ticker.lagSmoothing(0)
+    // !SECTION
 
-    // Track scroll state
-    ScrollTrigger.addEventListener('scrollStart', () => {
-      isScrolling.value = true;
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-    });
-
-    ScrollTrigger.addEventListener('scrollEnd', () => {
-      scrollTimeout = setTimeout(() => {
-        isScrolling.value = false;
-      }, 150);
-    });
-
-    // SECTION - HERO SECTION ANIMATIONS
-    const heroTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.hero-section',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-        onUpdate: (self) => {
-          if (self.progress < 0.5) currentSection.value = 'hero';
-        },
-      },
-    });
-
-    heroTimeline
-      .fromTo('.hero-section', { opacity: 1, y: 0 }, { opacity: 0, y: -100, ease: 'power2.inOut' });
-
-      //!SECTION
-      //SECTION - MEDIA SECTION ANIMATIONS
-      const mediaTimeline = gsap.timeline({
+    //SECTION - HERO
+    const heroTl = gsap.timeline()
+    // fade in on load
+    heroTl.fromTo(
+      '.hero-section',
+      { opacity: 0 },
+      { opacity: 1, duration: 1.5, ease: 'power2.inOut' }
+    )
+    // Fade out on scroll
+    gsap.fromTo(
+      '.hero-section',
+      { opacity: 1, y: 0 },
+      {
+        opacity: 0,
+        y: -80,
+        ease: 'power2.inOut',
+        immediateRender: false,
         scrollTrigger: {
-          trigger: '.media-section',
-          start: 'top bottom',
-          end: 'center center', 
-          scrub: 1,
-          onEnter: () => (currentSection.value = 'media'),
-        },
-      });
-
-      mediaTimeline
-        .fromTo('.media-section', { opacity: 0, y: 100 }, { opacity: 1, y: 0, ease: 'power2.inOut' });
-
-      // Meida section Pin
-      ScrollTrigger.create({
-        trigger: '.media-section',
-        start: 'center center',
-        end: '+=800',
-        pin: true,
-        pinSpacing: true,
-        scrub: 1,
-      });
-
-      //Media Section fade out
-      const mediaFadeOut = gsap.timeline({
-        scrollTrigger:{
-        trigger: '.media-section',
-        start: 'center+=800 center',
-        end: 'bottom up',
-        scrub: 1,
-        },
-      });
-
-      mediaFadeOut.to('.media-section', { opacity: 0, y: -100, ease: 'power2.inOut' });
-
-      // !SECTION
-      // SECTION - Music Section Animations
-      const musicTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.music-section',
-          start: 'top bottom', 
-          end: 'center center',
-          scrub: 1,
-          onEnter: () => (currentSection.value = 'music'),
-        },
-      });
-
-      musicTimeline
-        .fromTo('.music-section', { opacity: 0, y: 100 }, { opacity: 1, y: 0, ease: 'power2.inOut' });
-
-      // Music section Horizontal Scroll-Jacking (for Carousel)
-      const musicHorizontal = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.music-section',
-          start: 'center center',
-          end: '+=3000',
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom+=500 top',
+          scrub: 3,
           pin: true,
-          scrub: 1, 
-          anticipatePin: 1,
-        },
-      });
-
-      musicHorizontal.to('.carousel__track', {
-        x: '0vw',
-        ease: 'none',
-      });
-
-      // Music section fade out (to left)
-      const musicFadeOut = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.music-section',
-          start: 'center+=3000 center', 
-          end: 'bottom top',
-          scrub: 1,
-        },
-      });
-
-      musicFadeOut.to('.music-section', { opacity: 0, x: -200, ease: 'power2.inOut' });
-
+          pinSpacing: true,
+          markers: true
+        }
+      }
+    )
     //!SECTION
-    // SECTION - MERCH SECTION ANIMATIONS (kaleidoscope rotation)
-    const merchTimeline = gsap.timeline({
+
+    // SECTION - MEDIA
+    // Fade in
+    const mediaFadeInTl = gsap.timeline({
       scrollTrigger: {
-        trigger: '.merch-section',
-        start: 'top bottom',
-        end: 'bottom top',
+        trigger: '.media-section',
+        start: 'top center',
+        end: 'top top+=40',
         scrub: 1,
-        onEnter: () => (currentSection.value = 'merch'),
-      },
-    });
+        markers: true,
+      }
+    })
+    mediaFadeInTl.fromTo('.media-section', { opacity: 0 }, { opacity: 1, ease: 'power2.inOut' }, 0)
+    mediaFadeInTl.fromTo('.media-section h1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, ease: 'power2.out' }, 0)
 
-    merchTimeline.fromTo(
-      '.kaleidoscope img',
-      { rotation: 0 }, 
-      { rotation: 360, ease: 'none' }
-    );
+    // Pin + fade out 
+    const mediaPinTl = gsap.timeline()
+    mediaPinTl.to('.media-section', { duration: 1.5 }) // hold — no opacity change, avoids replaying fade-in
+    mediaPinTl.to('.media-section', { opacity: 0, ease: 'power2.inOut', duration: 0.5 })
 
-    // MERCH section pin and fade in content
     ScrollTrigger.create({
-      trigger: '.merch-section',
+      trigger: '.media-section',
       start: 'center center',
+      end: '+=2000',
+      pin: true,
+      pinSpacing: true,
+      scrub: 3,
+      animation: mediaPinTl,
+      markers: true,
+      onEnter: () => { canStamp.value = true },
+      onLeave: () => { canStamp.value = false },
+      onEnterBack: () => { canStamp.value = true },
+      onLeaveBack: () => { canStamp.value = false },
+    })
+    // !SECTION
+
+    // SECTION - MUSIC
+
+    gsap.set('.music-section-wrapper', { opacity: 0 })
+
+
+    const musicPinTl = gsap.timeline()
+    musicPinTl.fromTo(
+      '.music-section-wrapper',
+      { opacity: 0 },
+      { opacity: 1, ease: 'power2.inOut', duration: 0.5 }
+    )
+    musicPinTl.to('.music-section-wrapper', { opacity: 1, duration: 1 }) 
+
+    ScrollTrigger.create({
+      trigger: '.music-section-wrapper',
+      start: 'top top+=40',
       end: '+=800',
       pin: true,
       pinSpacing: true,
-    });
+      scrub: 3,
+      animation: musicPinTl,
+      markers: true
+    })
 
-    const merchContentTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.merch-section',
-        start: 'center center',
-        end: '+=400',
-        scrub: 1,
-      },
-    });
-
-    merchContentTimeline
-      .fromTo('.merch__grid', { opacity: 0 }, { opacity: 1, ease: 'power2.inOut' })
-      .fromTo('.store-link', { opacity: 0 }, { opacity: 1, ease: 'power2.inOut' });
-
-    //!SECTION
-    //SECTION - SHOWS SECTION ANIMATIONS 
-    const showsTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.shows-section',
-        start: 'top bottom',
-        end: 'center center', 
-        scrub: 1,
-        onEnter: () => (currentSection.value = 'shows'),
-      },
-    });
-
-    showsTimeline
-      .fromTo('.shows-section', { opacity: 0, x: 100 }, { opacity: 1, x: 0, ease: 'power2.inOut' });
-
-    // Update scroll progress
-    ScrollTrigger.create({
-      trigger: 'body',
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => {
-        scrollProgress.value = self.progress;
-      },
-    });
-  };
-
-  const cleanup = () => {
-    if (import.meta.client) {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  };
-
-  onMounted(() => {
-    initScrollAnimations();
-  });
+    // Fade out 
+    gsap.fromTo(
+      '.music-section-wrapper',
+      { opacity: 1 },
+      {
+        opacity: 0,
+        ease: 'power2.inOut',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: '.music-section-wrapper',
+          start: 'center center',
+          end: 'bottom top',
+          scrub: 1,
+          markers: true
+        }
+      }
+    )
+    // !SECTION
+  })
 
   onBeforeUnmount(() => {
-    cleanup();
-  });
-
-  return {
-    isScrolling,
-    currentSection,
-    scrollProgress,
-    initScrollAnimations,
-    cleanup,
-  }
+    ScrollTrigger.getAll().forEach((tl) => tl.kill())
+    lenis?.destroy()
+  })
 }

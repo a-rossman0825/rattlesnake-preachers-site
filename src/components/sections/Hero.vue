@@ -1,25 +1,17 @@
-<script lang="ts" setup>
-import { onMounted } from 'vue';
-import { gsap } from 'gsap';
-
-onMounted(() => {
-  gsap.fromTo(
-    '.hero-section',
-    { opacity: 0 },
-    { opacity: 1, duration: 1, ease: 'power2.out' }
-  )
-});
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <section class="hero-section relative h-screen w-full overflow-hidden pt-7">
     <video autoplay muted loop playsinline class="absolute inset-0 h-full w-full object-cover">
       <source src="/assets/media/mash24-vid.mp4" type="video/mp4" />
     </video>
-
+    <!-- Hero section video filter overlay (darkens video) -->
     <div class="absolute inset-0 bg-black/40"></div>
-    <div class="text-light relative z-10 flex justify-between px-10 pt-5 text-5xl">
-      <NuxtLink to="/listen" class="font-display text-5xl font-extrabold uppercase tracking-[0.1em] no-underline">
+    <div class="relative z-10 flex justify-between px-10 pt-5 text-5xl text-light">
+      <NuxtLink
+        to="/listen"
+        class="font-display text-5xl font-extrabold uppercase tracking-[0.1em] no-underline"
+      >
         listen
       </NuxtLink>
       <a
@@ -30,9 +22,12 @@ onMounted(() => {
     </div>
 
     <div class="relative mt-40 flex h-full text-center">
-      <h1 class="font-display text-8xl text-9xl uppercase tracking-[.3em] outline-text">
+      <h1 class="outline-text font-display text-8xl text-9xl uppercase tracking-[.3em]">
         Rattlesnake Preachers
       </h1>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-light opacity-75">
+      <p class="font-display text-sm uppercase tracking-[0.4em]">scroll down</p>
     </div>
   </section>
 </template>

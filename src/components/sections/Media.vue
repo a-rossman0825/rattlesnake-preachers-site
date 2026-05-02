@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { imagesArray } from '~/data/imagesArray'
-import { usePageScroll } from '~/composables/usePageScroll'
+import { canStamp } from '~/composables/useMediaState'
 
 // Array of image paths
 const images: string[] = imagesArray
@@ -19,18 +19,8 @@ const stampedImages: HTMLImageElement[] = []
 // Track the last mouse position to control stamping frequency
 let lastMousePos = { x: 0, y: 0 }
 
-// Get scroll state
-const { isScrolling } = usePageScroll();
-
-// control stamping based on scroll state
-let canStamp = ref(true);
-
-watch(isScrolling, (scrolling) => {
-  canStamp.value = !scrolling
-});
-
 const handleMouseMove = (event: MouseEvent) => {
-  if (!stampsContainer.value) return
+  if (!stampsContainer.value || !canStamp.value) return
 
   // Calculate the distance moved since the last stamp
   const distance = Math.hypot(event.clientX - lastMousePos.x, event.clientY - lastMousePos.y)
@@ -90,12 +80,13 @@ const handleMouseMove = (event: MouseEvent) => {
 
 <template>
   <section
-    class="media-section relative h-screen w-screen overflow-hidden bg-black"
+    class="media-section relative h-screen w-screen overflow-hidden bg-dark"
     @mousemove="handleMouseMove"
     aria-label="Interactive section for visual exploration. Images appear as you move your mouse."
   >
     <h1
-      class="animate-fadeIn absolute left-10 top-1/2 z-10 -translate-y-1/2 transform text-5xl text-white opacity-0"
+      class="absolute left-10 top-1/2 z-10 -translate-y-1/2 transform text-5xl text-white"
+      style="opacity: 0"
     >
       <a
         href="/media"
@@ -114,17 +105,4 @@ const handleMouseMove = (event: MouseEvent) => {
   </section>
 </template>
 
-<style>
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 1s forwards;
-}
-</style>
+<style></style>

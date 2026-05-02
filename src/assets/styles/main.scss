@@ -17,19 +17,42 @@ html {
   }
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: var(--font-display);
 }
 
-h3, h4, h5, h6 {
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
+}
+
+// Use a pseudo-element overlay instead of filter:blur on .page.
+// filter: blur() on a parent creates a new stacking context which breaks
+// GSAP's position:fixed pins, causing content to jump on navbar hover.
+.page {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 40;
+  }
 }
 
 .app:has(nav:hover) .page {
-  filter: blur(10px);
   pointer-events: none;
-}
 
-.page-section {
-  margin-block: 20vh; //Increase/decrease for section spacing
+  &::after {
+    opacity: 1;
+    pointer-events: none;
+  }
 }
