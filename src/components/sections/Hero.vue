@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { publicUrl } from '~/utils/publicUrl'
+import { usePublicUrl } from '~/utils/publicUrl'
+const publicUrl = usePublicUrl()
 const videoSrc = publicUrl('/media/mash24-vid.mp4')
 </script>
 

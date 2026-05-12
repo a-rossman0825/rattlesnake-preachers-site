@@ -1,9 +1,9 @@
 /**
- * Prepends Vite's BASE_URL to a public asset path.
- * On GitHub Pages this will be e.g. /rattlesnake-preachers-site/media/foo.png
- * Locally it will just be /media/foo.png
+ * Prepends Nuxt's app.baseURL (from runtimeConfig) to a public asset path.
+ * Must be called inside a Vue component setup context.
  */
-export const publicUrl = (path: string): string => {
-  const base = import.meta.env.BASE_URL ?? '/'
-  return `${base.replace(/\/$/, '')}${path}`
+export const usePublicUrl = () => {
+  const config = useRuntimeConfig()
+  const base = (config.app.baseURL as string) ?? '/'
+  return (path: string): string => `${base.replace(/\/$/, '')}${path}`
 }
