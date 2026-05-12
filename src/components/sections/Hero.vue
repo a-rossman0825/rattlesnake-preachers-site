@@ -1,9 +1,11 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const videoSrc = '/media/mash24-vid.mp4'
+</script>
 
 <template>
   <section class="hero-section relative h-screen w-full overflow-hidden pt-7">
     <video autoplay muted loop playsinline class="absolute inset-0 h-full w-full object-cover">
-      <source src="/media/mash24-vid.mp4" type="video/mp4" />
+      <source :src="videoSrc" type="video/mp4" />
     </video>
     <!-- Hero section video filter overlay (darkens video) -->
     <div class="absolute inset-0 bg-black/40"></div>
