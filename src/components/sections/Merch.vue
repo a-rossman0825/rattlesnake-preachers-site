@@ -14,6 +14,8 @@ const handleMerchClick = (itemName: string) => {
 const handleStoreClick = () => {
   window.open(storeUrl, '_blank')
 }
+
+const ouroborosSrc = '/media/ouroboros.png'
 </script>
 
 <template>
@@ -23,7 +25,7 @@ const handleStoreClick = () => {
     <!-- Kaleidoscope background -->
     <div class="kaleidoscope absolute inset-0 z-0 flex items-center justify-center">
       <img
-        src="/media/ouroboros.png"
+        :src="ouroborosSrc"
         alt="Ouroboros Kaleidoscope"
         class="h-[95vh] w-[95vw] object-cover"
       />
