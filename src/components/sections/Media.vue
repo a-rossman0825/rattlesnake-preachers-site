@@ -2,9 +2,10 @@
 import { ref } from 'vue'
 import { imagesArray } from '~/data/imagesArray'
 import { canStamp } from '~/composables/useMediaState'
+import { publicUrl } from '~/utils/publicUrl'
 
 // Array of image paths
-const images: string[] = imagesArray
+const images: string[] = imagesArray.map(publicUrl)
 
 // Reference to the stamps container
 const stampsContainer = ref<HTMLDivElement | null>(null)

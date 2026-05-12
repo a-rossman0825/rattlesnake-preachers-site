@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { albums } from '~/data/albums'
+import { publicUrl } from '~/utils/publicUrl'
 
-const featuredAlbums = computed(() => albums.filter((a) => a.featured))
+const featuredAlbums = computed(() =>
+  albums.filter((a) => a.featured).map((a) => ({ ...a, albumCover: publicUrl(a.albumCover) }))
+)
 
 const carouselContainer = ref<HTMLElement | null>(null)
 const trackRef = ref<HTMLElement | null>(null)
