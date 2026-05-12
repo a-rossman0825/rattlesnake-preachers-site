@@ -2,8 +2,8 @@
 
 A Brutalism/experimental UI styled static (SSG) band website for Rattlesnake Preachers built with Nuxt 3, Vue 3, Tailwind, and GSAP.
 
-Designed by: [Anthony Rossman](https://anthonyjrossman.tech)
-Built & maintained by: [Anthony Rossman](https://anthonyjrossman.tech), and [Graham Olsen]()
+Designed by, built, and maintained by: [Anthony Rossman](https://anthonyjrossman.tech)
+
 
 ## Prerequisites
 - Node.js (v18 or higher)
