@@ -120,8 +120,7 @@ export const usePageScroll = () => {
         end: '+=4000',
         pin: true,
         pinSpacing: true,
-        scrub: 3,
-        markers: true
+        scrub: 3
       }
     })
 
@@ -216,8 +215,7 @@ export const usePageScroll = () => {
         end: '+=2000',
         pin: true,
         pinSpacing: true,
-        scrub: 2,
-        markers: true
+        scrub: 2
       }
     })
 
@@ -285,8 +283,7 @@ export const usePageScroll = () => {
         end: '+=1000',
         pin: true,
         pinSpacing: true,
-        scrub: 2,
-        markers: true
+        scrub: 2
       }
     })
     showsTl.fromTo(
