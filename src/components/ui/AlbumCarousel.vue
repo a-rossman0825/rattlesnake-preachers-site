@@ -10,12 +10,8 @@ const trackRef = ref<HTMLElement | null>(null)
 
 <template>
   <div ref="carouselContainer" class="carousel relative h-full w-full overflow-hidden">
-    <div ref="trackRef" class="carousel__track flex h-full w-max">
-      <div
-        v-for="album in featuredAlbums"
-        :key="album.id"
-        class="album-card flex flex-shrink-0 items-start gap-20"
-      >
+    <div ref="trackRef" class="carousel__track">
+      <div v-for="album in featuredAlbums" :key="album.id" class="album-card">
         <div class="album-card__wrapper flex flex-col items-center gap-4">
           <div class="album-card__cover aspect-square w-[30vw]">
             <img
@@ -27,11 +23,11 @@ const trackRef = ref<HTMLElement | null>(null)
           <button class="album-card__button uppercase">listen</button>
         </div>
 
-        <div class="album-card__details">
+        <div class="album-card__details flex flex-col gap-4">
           <h3 class="album-card__title mb-4 w-[140px] font-body text-5xl uppercase leading-[1.2]">
             {{ album.title }}
           </h3>
-          <p class="album-card__date mb-6 w-[190px] font-body font-bold uppercase">
+          <p class="album-card__date w-[190px] font-body font-bold uppercase">
             released: {{ formatDate(album.releaseDate, 'snakeCase') }}
           </p>
           <div class="album-card__description w-[120px] font-body" v-html="album.description"></div>
@@ -43,7 +39,20 @@ const trackRef = ref<HTMLElement | null>(null)
 
 <style lang="scss" scoped>
 .carousel__track {
-  gap: 100vw;
-  transform: translateX(-153vw);
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.album-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 15vw;
+  gap: 4rem;
 }
 </style>

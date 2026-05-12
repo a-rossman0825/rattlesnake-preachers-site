@@ -1,27 +1,32 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { merchItems } from '~/data/MerchItems';
+import { computed } from 'vue'
+import { merchItems } from '~/data/MerchItems'
 
 const storeUrl = 'https://placeholder-store-url.com' // TODO - replace when store url is ready
 
-const merch = computed(() => merchItems);
+const merch = computed(() => merchItems)
 
 const handleMerchClick = (itemName: string) => {
   // TODO - Route to correct shopify product links
-  window.open(`${storeUrl}/${itemName}`, '_blank');
-};
+  window.open(`${storeUrl}/${itemName}`, '_blank')
+}
 
 const handleStoreClick = () => {
-  window.open(storeUrl, '_blank');
-};
-
+  window.open(storeUrl, '_blank')
+}
 </script>
 
 <template>
-  <section class="merch-section relative h-screen w-full flex flex-col items-center justify-center bg-light">
+  <section
+    class="merch-section relative flex h-screen w-full flex-col items-center justify-center bg-light"
+  >
     <!-- Kaleidoscope background -->
-    <div class="kaleidoscope absolute inset-0 flex items-center justify-center z-0">
-      <img src="/assets/media/ouroboros.png" alt="Ouroboros Kaleidoscope" class="h-[95vh] w-[95vw] object-cover">
+    <div class="kaleidoscope absolute inset-0 z-0 flex items-center justify-center">
+      <img
+        src="/assets/media/ouroboros.png"
+        alt="Ouroboros Kaleidoscope"
+        class="h-[95vh] w-[95vw] object-cover"
+      />
     </div>
     <div class="merch__content relative z-10 flex flex-col items-center gap-8">
       <div class="merch__grid grid grid-cols-4 gap-4">
@@ -29,16 +34,16 @@ const handleStoreClick = () => {
           v-for="item in merch"
           :key="item.name"
           @click="handleMerchClick(item.name)"
-          class="merch-item cursor-pointer h-[400px]"
+          class="merch-item h-[400px] cursor-pointer"
         >
-          <img 
-            :src="item.image" 
-            :alt="`${item.name} merch item`" 
+          <img
+            :src="item.image"
+            :alt="`${item.name} merch item`"
             class="h-full w-full object-cover"
           />
         </button>
       </div>
-      <a 
+      <a
         href="#"
         @click.prevent="handleStoreClick"
         class="store-link text-2xl font-bold uppercase text-dark"
@@ -62,10 +67,5 @@ const handleStoreClick = () => {
   img {
     display: block;
   }
-}
-
-.merch__grid,
-.store-link {
-  opacity: 0;
 }
 </style>

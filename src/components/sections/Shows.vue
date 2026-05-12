@@ -1,21 +1,18 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { formatDate } from '~/utils/formatDate'
-import { filterShows } from '../../utils/filterShows';
-import { shows } from '~/data/shows';
-import type { Show } from '~/types/Show';
+import { filterShows } from '../../utils/filterShows'
+import { shows } from '~/data/shows'
+import type { Show } from '~/types/Show'
 
-
-const showArray = computed((): Show[] => filterShows(shows)); // Filters out past shows from Shows[]
-
+const showArray = computed((): Show[] => filterShows(shows)) // Filters out past shows from Shows[]
 
 const title = 'FEAST YOUR SOUL'
-
 </script>
 
 <template>
   <section class="shows-section shows h-screen w-full bg-dark text-light">
-    <div class="shows__inner">
+    <div class="shows__inner" style="opacity: 0">
       <!-- Left: vertical stacked title -->
       <div class="shows__title" aria-hidden>
         <div v-for="(char, i) in title.split('')" :key="i" class="shows__title-char cursor-pointer">
@@ -57,7 +54,7 @@ const title = 'FEAST YOUR SOUL'
 }
 
 .shows__title {
-  width: 6rem; 
+  width: 6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
