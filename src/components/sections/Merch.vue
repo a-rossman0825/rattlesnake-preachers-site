@@ -23,7 +23,7 @@ const handleStoreClick = () => {
     <!-- Kaleidoscope background -->
     <div class="kaleidoscope absolute inset-0 z-0 flex items-center justify-center">
       <img
-        src="/assets/media/ouroboros.png"
+        src="/media/ouroboros.png"
         alt="Ouroboros Kaleidoscope"
         class="h-[95vh] w-[95vw] object-cover"
       />
