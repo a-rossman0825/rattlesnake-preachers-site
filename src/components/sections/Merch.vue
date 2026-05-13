@@ -6,9 +6,7 @@ import { usePublicUrl } from '~/utils/publicUrl'
 const storeUrl = 'https://placeholder-store-url.com' // TODO - replace when store url is ready
 const publicUrl = usePublicUrl()
 
-const merch = computed(() =>
-  merchItems.map((item) => ({ ...item, image: publicUrl(item.image) }))
-)
+const merch = computed(() => merchItems.map((item) => ({ ...item, image: publicUrl(item.image) })))
 
 const handleMerchClick = (itemName: string) => {
   // TODO - Route to correct shopify product links

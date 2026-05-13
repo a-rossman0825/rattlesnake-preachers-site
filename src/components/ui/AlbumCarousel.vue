@@ -4,9 +4,7 @@ import { albums } from '~/data/albums'
 import { usePublicUrl } from '~/utils/publicUrl'
 const publicUrl = usePublicUrl()
 const featuredAlbums = computed(() =>
-  albums
-    .filter((a) => a.featured)
-    .map((a) => ({ ...a, albumCover: publicUrl(a.albumCover) }))
+  albums.filter((a) => a.featured).map((a) => ({ ...a, albumCover: publicUrl(a.albumCover) }))
 )
 
 const carouselContainer = ref<HTMLElement | null>(null)
