@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { albums } from '~/data/albums'
+import { usePublicUrl } from '~/utils/publicUrl'
+const publicUrl = usePublicUrl()
 const featuredAlbums = computed(() =>
   albums
     .filter((a) => a.featured)
-    .map((a) => ({ ...a, albumCover: a.albumCover.replace(/^\//, '') }))
+    .map((a) => ({ ...a, albumCover: publicUrl(a.albumCover) }))
 )
 
 const carouselContainer = ref<HTMLElement | null>(null)

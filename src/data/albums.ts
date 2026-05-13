@@ -4,7 +4,7 @@ export const albums: Album[] = [
   {
     id: 'feels-too-good',
     title: 'Feels Too Good',
-    albumCover: '/media/albumCovers/FTG-cover.png',
+    albumCover: '/assets/media/albumCovers/FTG-cover.png',
     releaseDate: '2026-03-24',
     description:
       "Why must we <u>trifle</u>, age and <u>spoil</u>? How has lady Nature granted me the gift of God's Nectar, and still yet, She <u>poisons</u> us from within when we attempt to <u>cope</u> by its <u>consumption</u>?",
@@ -17,7 +17,7 @@ export const albums: Album[] = [
       title: 'Feels Too Good - Single',
       description: 'A single by Rattlesnake Preachers featuring John Kunk, released on March 24, 2026.',
       canonicalUrl: '/albums/feels-too-good',
-      openGraphImage: '/media/albumCovers/FTG-cover.png',
+      openGraphImage: '/assets/media/albumCovers/FTG-cover.png',
       twitterCard: 'summary_large_image',
       structuredData: {
         "@context": "https://schema.org",
@@ -37,7 +37,7 @@ export const albums: Album[] = [
             duration: "PT3M20S",
           },
         ],
-        image: "/media/albumCovers/FTG-cover.png",
+        image: "/assets/media/albumCovers/FTG-cover.png",
         url: "/albums/feels-too-good",
         description: "A single by Rattlesnake Preachers featuring John Kunk, released on March 24, 2026.",
       },
@@ -46,7 +46,7 @@ export const albums: Album[] = [
   {
     id: 'rattlesnake-preachers',
     title: 'Rattlesnake Preachers [EP]',
-    albumCover: '/media/logos/logo1.png',
+    albumCover: '/assets/media/logos/logo1.png',
     releaseDate: '2024-02-05',
     description:
       'Drones sail across <u>reddened</u> skies high above the hordes of lizard <u>people</u>. The last of our kind take <u>refuge</u> in sewage wells and shadow-plays of the <u>now-mythical</u> entity named "Basic Cable Television.',
@@ -57,7 +57,7 @@ export const albums: Album[] = [
       title: 'Rattlesnake Preachers [EP]',
       description: 'An EP by Rattlesnake Preachers, released on February 5, 2024.',
       canonicalUrl: '/albums/rattlesnake-preachers',
-      openGraphImage: '/media/logos/logo1.png',
+      openGraphImage: '/assets/media/logos/logo1.png',
       twitterCard: 'summary_large_image',
       structuredData: {
         "@context": "https://schema.org",
@@ -92,7 +92,7 @@ export const albums: Album[] = [
             duration: "PT5M02S"
           }
         ],
-        image: "/media/logos/logo1.png",
+        image: "/assets/media/logos/logo1.png",
         url: "/albums/rattlesnake-preachers",
         description: "An EP by Rattlesnake Preachers, released on February 5, 2024.",
       },
@@ -101,7 +101,7 @@ export const albums: Album[] = [
   {
     id: 'rattle-my-bones',
     title: 'Rattle My Bones',
-    albumCover: '/media/logos/skate-logo.png',
+    albumCover: '/assets/media/logos/skate-logo.png',
     releaseDate: '2024-01-01',
     description:
       "Delight in the <u>moment</u>: Youth's <u>hunger</u> to hold and be held will not <u>reside</u> in you as the source <u>forever</u>.",
@@ -112,7 +112,7 @@ export const albums: Album[] = [
       title: 'Rattle My Bones - Single',
       description: 'A single by Rattlesnake Preachers, released on January 1, 2024.',
       canonicalUrl: '/albums/rattle-my-bones',
-      openGraphImage: '/media/logos/skate-logo.png',
+      openGraphImage: '/assets/media/logos/skate-logo.png',
       twitterCard: 'summary_large_image',
       structuredData: {
         "@context": "https://schema.org",
@@ -132,7 +132,7 @@ export const albums: Album[] = [
             duration: "PT2M43S",
           },
         ],
-        image: "/media/logos/skate-logo.png",
+        image: "/assets/media/logos/skate-logo.png",
         url: "/albums/rattle-my-bones",
         description: "A single by Rattlesnake Preachers, released on January 1, 2024.",
       },

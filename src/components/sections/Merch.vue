@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { merchItems } from '~/data/MerchItems'
+import { usePublicUrl } from '~/utils/publicUrl'
 
 const storeUrl = 'https://placeholder-store-url.com' // TODO - replace when store url is ready
+const publicUrl = usePublicUrl()
 
 const merch = computed(() =>
-  merchItems.map((item) => ({ ...item, image: item.image.replace(/^\//, '') }))
+  merchItems.map((item) => ({ ...item, image: publicUrl(item.image) }))
 )
 
 const handleMerchClick = (itemName: string) => {
@@ -17,7 +19,7 @@ const handleStoreClick = () => {
   window.open(storeUrl, '_blank')
 }
 
-const ouroborosSrc = 'media/ouroboros.png'
+const ouroborosSrc = publicUrl('/assets/media/ouroboros.png')
 </script>
 
 <template>

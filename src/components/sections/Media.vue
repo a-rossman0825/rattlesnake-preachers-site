@@ -2,8 +2,9 @@
 import { ref } from 'vue'
 import { imagesArray } from '~/data/imagesArray'
 import { canStamp } from '~/composables/useMediaState'
-// Array of image paths — strip leading slash so <base> tag resolves correctly on GitHub Pages
-const images: string[] = imagesArray.map((p) => p.replace(/^\//, ''))
+import { usePublicUrl } from '~/utils/publicUrl'
+const publicUrl = usePublicUrl()
+const images: string[] = imagesArray.map(publicUrl)
 
 // Reference to the stamps container
 const stampsContainer = ref<HTMLDivElement | null>(null)
