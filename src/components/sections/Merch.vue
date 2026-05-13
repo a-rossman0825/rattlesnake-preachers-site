@@ -2,10 +2,11 @@
 import { computed } from 'vue'
 import { merchItems } from '~/data/MerchItems'
 
-
 const storeUrl = 'https://placeholder-store-url.com' // TODO - replace when store url is ready
 
-const merch = computed(() => merchItems.map((item) => ({ ...item, image: item.image.replace(/^\//, '') })))
+const merch = computed(() =>
+  merchItems.map((item) => ({ ...item, image: item.image.replace(/^\//, '') }))
+)
 
 const handleMerchClick = (itemName: string) => {
   // TODO - Route to correct shopify product links

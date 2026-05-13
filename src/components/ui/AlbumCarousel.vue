@@ -2,7 +2,9 @@
 import { ref, computed } from 'vue'
 import { albums } from '~/data/albums'
 const featuredAlbums = computed(() =>
-  albums.filter((a) => a.featured).map((a) => ({ ...a, albumCover: a.albumCover.replace(/^\//, '') }))
+  albums
+    .filter((a) => a.featured)
+    .map((a) => ({ ...a, albumCover: a.albumCover.replace(/^\//, '') }))
 )
 
 const carouselContainer = ref<HTMLElement | null>(null)
